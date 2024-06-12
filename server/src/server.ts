@@ -9,28 +9,14 @@ const PORT = 8080;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", async (req, res) => {
+app.get("/todos", async (_, res: Response) => {
   try {
     const result = await db.query("SELECT * FROM tasks");
-    console.log(result.rows);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
-});
-
-app.get("/todos", async (req: Request, res: Response) => {
-  console.log("hey!");
-  try {
-    const result = await db.query("SELECT * FROM tasks");
-    console.log(result.rows);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-  // res.status(200).send("It's working!");
 });
 
 app.post("/add", async (req: Request, res: Response) => {
@@ -57,12 +43,30 @@ app.post("/add", async (req: Request, res: Response) => {
       VALUES ('${newTask.id_task}', '${newTask.title}', '${newTask.description}', '${newTask.status}', ${newTask.created_at}, ${newTask.updated_at});
       `
     );
-    console.log(result.rows);
     res.status(200).send(newTask);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
+});
+
+app.patch("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  if (!id) {
+    res.status(400).send("Id not provided correctly.");
+  }
+  /*
+  try {
+    const result = await db.query(
+      `UPDATE tasks SET status = 'completed' WHERE id = ${id}`
+    );
+    res.status(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+*/
 });
 
 app.listen(PORT, () => console.log(`Listening to port ${PORT}!`));

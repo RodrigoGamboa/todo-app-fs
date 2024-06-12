@@ -3,12 +3,13 @@ import AddBtn from "components/AddBtn";
 import AddTaskDialog from "components/AddTaskDialog/AddTaskDialog";
 import TodoCard from "components/TodoCard/TodoCard";
 import TodoCounter from "components/TodoCounter/TodoCounter";
-import { Todo, addTodo } from "ts/types";
+import { IUpdateTask, Todo, addTodo } from "ts/types";
 
 interface Props {
   todos: Todo[];
   isLoading?: boolean;
   addTodo: (values: addTodo) => void;
+  updateTask: (values: IUpdateTask) => void;
   openAddModal: boolean;
   handleOpenAddModal: () => void;
   handleCloseAddModal: () => void;
@@ -18,6 +19,7 @@ const Todos = ({
   isLoading,
   todos,
   addTodo,
+  updateTask,
   openAddModal,
   handleOpenAddModal,
   handleCloseAddModal,
@@ -33,7 +35,7 @@ const Todos = ({
       {todos &&
         todos.map((todo: Todo) => (
           <div key={todo.id}>
-            <TodoCard data={todo} />
+            <TodoCard data={todo} updateTask={updateTask} />
           </div>
         ))}
       <AddBtn handleOpen={handleOpenAddModal} />

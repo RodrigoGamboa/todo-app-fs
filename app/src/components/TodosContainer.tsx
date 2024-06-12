@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Todos from "components/Todos";
-import { fetchTodos, sendTodo } from "services/apiRequests";
-import { Todos as TodosType, addTodo } from "ts/types";
+import { fetchTodos, sendTodo, updateTask } from "services/apiRequests";
+import { IUpdateTask, Todos as TodosType, addTodo } from "ts/types";
 
 const TodosContainer = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -25,8 +25,20 @@ const TodosContainer = () => {
     },
   });
 
+  const mutationUpdateTask = useMutation({
+    mutationFn: updateTask,
+    onSuccess: (result) => {
+      console.log(result);
+      toast.success("Task updated!");
+    },
+  });
+
   const handleAddTodo = (values: addTodo) => {
     mutation.mutate(values);
+  };
+
+  const handleUpdateTask = (values: IUpdateTask) => {
+    mutationUpdateTask.mutate(values);
   };
 
   const handleOpenAddModal = () => {
@@ -42,6 +54,7 @@ const TodosContainer = () => {
       todos={todos}
       isLoading={isLoading}
       addTodo={handleAddTodo}
+      updateTask={handleUpdateTask}
       openAddModal={openAddModal}
       handleOpenAddModal={handleOpenAddModal}
       handleCloseAddModal={handleCloseAddModal}
