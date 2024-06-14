@@ -6,10 +6,14 @@ export const fetchTodos = async () => {
   return await Fetch.get(API.todos()).then(({ data }) => data);
 };
 
+// export const updateTask = async (values: IUpdateTask) => {
+//   return await Fetch.put(API.updateTask(values.id), values).then(
+//     ({ data }) => data
+//   );
+// };
+
 export const updateTask = async (values: IUpdateTask) => {
-  return await Fetch.patch(API.updateTask(values.id), values.status).then(
-    ({ data }) => data
-  );
+  return await Fetch.post(API.updateTask, values).then(({ data }) => data);
 };
 
 export const sendTodo = async (values: addTodo) => {

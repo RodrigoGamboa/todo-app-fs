@@ -6,7 +6,14 @@ import { Todo, Todos } from "./ts/types";
 const app = express();
 const PORT = 8080;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FE_ORIGIN,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
+);
 app.use(express.json());
 
 app.get("/todos", async (_, res: Response) => {
@@ -50,12 +57,14 @@ app.post("/add", async (req: Request, res: Response) => {
   }
 });
 
-app.patch("/todos/:id", async (req: Request, res: Response) => {
+app.post("/todos/:id", (req: Request, res: Response) => {
   const { id } = req.params;
-  const { status } = req.body;
+  // const { status } = req.body;
+  console.log(id);
   if (!id) {
     res.status(400).send("Id not provided correctly.");
   }
+  res.status(200);
   /*
   try {
     const result = await db.query(
