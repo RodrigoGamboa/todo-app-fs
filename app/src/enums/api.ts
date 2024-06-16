@@ -6,8 +6,9 @@ const API_HOST = `${API_PROTOCOL}://${API_SERVER}`;
 
 const API = {
   todos: () => `${API_HOST}/todos`,
-  // updateTask: (taskId: TaskId) => `${API_HOST}/todos/${taskId}`,
-  updateTask: `${API_HOST}/todos/100`,
+  updateTask: (taskId: TaskId) => `${API_HOST}/updatetask/${taskId}`,
+  // updateTask: `${API_HOST}/todos/100`,
+  // updateTask: `${API_HOST}/todostest/101`,
   addTask: `${API_HOST}/add`,
 };
 

@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.get("/todos", async (_, res: Response) => {
   try {
-    const result = await db.query("SELECT * FROM tasks");
+    const result = await db.query("SELECT * FROM tasks;");
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -57,25 +57,30 @@ app.post("/add", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/todos/:id", (req: Request, res: Response) => {
+app.patch("/updatetask/:id", async (req: Request, res: Response) => {
+  let newStatus = "completed";
   const { id } = req.params;
-  // const { status } = req.body;
-  console.log(id);
+  const { status } = req.body;
   if (!id) {
     res.status(400).send("Id not provided correctly.");
   }
-  res.status(200);
-  /*
+  if (!status) {
+    res.status(400).send("Status not provided correctly.");
+  }
+  if (status === "completed") {
+    newStatus = "in-progress";
+  } else if (status === "in-progress") {
+    newStatus = "completed";
+  }
   try {
     const result = await db.query(
-      `UPDATE tasks SET status = 'completed' WHERE id = ${id}`
+      `UPDATE tasks SET status = '${newStatus}' WHERE id = ${id} RETURNING *;`
     );
-    res.status(200);
+    res.status(200).send(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
-*/
 });
 
 app.listen(PORT, () => console.log(`Listening to port ${PORT}!`));

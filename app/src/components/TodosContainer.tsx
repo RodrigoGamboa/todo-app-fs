@@ -28,7 +28,10 @@ const TodosContainer = () => {
   const mutationUpdateTask = useMutation({
     mutationFn: updateTask,
     onSuccess: (result) => {
-      console.log(result);
+      queryClient.setQueryData(["products"], (oldData: TodosType) => {
+        const prevData = oldData.filter((oldTask) => oldTask.id !== result.id);
+        return [...prevData, result];
+      });
       toast.success("Task updated!");
     },
   });
