@@ -1,9 +1,13 @@
 import API from "enums/api";
 import Fetch from "services/fetch";
-import { IUpdateTask, addTodo } from "ts/types";
+import { IUpdateTask, TaskId, addTodo } from "ts/types";
 
 export const fetchTodos = async () => {
   return await Fetch.get(API.todos()).then(({ data }) => data);
+};
+
+export const sendTodo = async (values: addTodo) => {
+  return await Fetch.post(API.addTask, values).then(({ data }) => data);
 };
 
 export const updateTask = async (values: IUpdateTask) => {
@@ -12,6 +16,6 @@ export const updateTask = async (values: IUpdateTask) => {
   );
 };
 
-export const sendTodo = async (values: addTodo) => {
-  return await Fetch.post(API.addTask, values).then(({ data }) => data);
+export const deleteTask = async (id: TaskId) => {
+  return await Fetch.delete(API.deleteTask(id)).then(({ data }) => data);
 };

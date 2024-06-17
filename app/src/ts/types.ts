@@ -17,13 +17,13 @@ export interface Todo {
   updated_at: Date;
 }
 
-export interface IUpdateTask {
-  id: TaskId;
-  status: TTaskStatus;
-}
-
 export interface addTodo {
   title: string;
   description: string;
   status: TodoStatus;
+}
+
+export interface IUpdateTask {
+  id: TaskId;
+  status: TTaskStatus;
 }

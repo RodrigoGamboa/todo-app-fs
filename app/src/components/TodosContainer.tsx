@@ -2,11 +2,17 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Todos from "components/Todos";
-import { fetchTodos, sendTodo, updateTask } from "services/apiRequests";
-import { IUpdateTask, Todos as TodosType, addTodo } from "ts/types";
+import {
+  deleteTask,
+  fetchTodos,
+  sendTodo,
+  updateTask,
+} from "services/apiRequests";
+import { IUpdateTask, TaskId, Todos as TodosType, addTodo } from "ts/types";
 
 const TodosContainer = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const queryClient = useQueryClient();
   const { data: todos, isLoading } = useQuery({
     queryKey: ["products"],
@@ -36,12 +42,27 @@ const TodosContainer = () => {
     },
   });
 
+  const mutationDeleteTask = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: (result) => {
+      queryClient.setQueryData(["products"], (oldData: TodosType) => {
+        const prevData = oldData.filter((oldTask) => oldTask.id !== result.id);
+        return [...prevData];
+      });
+      toast.success("Task deleted!");
+    },
+  });
+
   const handleAddTodo = (values: addTodo) => {
     mutation.mutate(values);
   };
 
   const handleUpdateTask = (values: IUpdateTask) => {
     mutationUpdateTask.mutate(values);
+  };
+
+  const handleDeleteTask = (id: TaskId) => {
+    mutationDeleteTask.mutate(id);
   };
 
   const handleOpenAddModal = () => {
@@ -52,15 +73,26 @@ const TodosContainer = () => {
     setOpenAddModal(false);
   };
 
+  const handleOpenAlertDialog = () => {
+    setOpenAlertDialog(true);
+  };
+
+  const handleCloseAlertDialog = () => {
+    setOpenAlertDialog(false);
+  };
+
   return (
     <Todos
       todos={todos}
       isLoading={isLoading}
       addTodo={handleAddTodo}
       updateTask={handleUpdateTask}
+      deleteTask={handleDeleteTask}
       openAddModal={openAddModal}
       handleOpenAddModal={handleOpenAddModal}
       handleCloseAddModal={handleCloseAddModal}
+      handleOpenAlertDialog={handleOpenAlertDialog}
+      handleCloseAlertDialog={handleCloseAlertDialog}
     />
   );
 };

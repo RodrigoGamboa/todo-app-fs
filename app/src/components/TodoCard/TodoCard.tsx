@@ -6,17 +6,26 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditNote";
 import { TodoStatus } from "enums/tasks";
-import { IUpdateTask, Todo } from "ts/types";
+import { IUpdateTask, TaskId, Todo } from "ts/types";
 import styles from "./TodoCard.module.scss";
 
 interface Props {
   data: Todo;
   updateTask: (values: IUpdateTask) => void;
+  deleteTask: (id: TaskId) => void;
+  handleOpenAlertDialog: () => void;
+  handleCloseAlertDialog: () => void;
 }
 
 const label = { inputProps: { "aria-label": "controlled" } };
 
-const TodoCard = ({ data, updateTask }: Props) => {
+const TodoCard = ({
+  data,
+  updateTask,
+  deleteTask,
+  handleOpenAlertDialog,
+  handleCloseAlertDialog,
+}: Props) => {
   return (
     <Card className={styles.root}>
       <CardActions>
@@ -31,7 +40,7 @@ const TodoCard = ({ data, updateTask }: Props) => {
         <IconButton>
           <EditIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => deleteTask(data.id)}>
           <DeleteIcon />
         </IconButton>
       </CardActions>
