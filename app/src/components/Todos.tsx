@@ -1,9 +1,10 @@
 import Skeleton from "@mui/material/Skeleton";
 import AddBtn from "components/AddBtn";
 import AddTaskDialog from "components/AddTaskDialog/AddTaskDialog";
+import DeleteAlert from "components/DeleteAlert/DeleteAlert";
 import TodoCard from "components/TodoCard/TodoCard";
 import TodoCounter from "components/TodoCounter/TodoCounter";
-import { IUpdateTask, TaskId, Todo, addTodo } from "ts/types";
+import { IDeleteTaskAlert, IUpdateTask, TaskId, Todo, addTodo } from "ts/types";
 
 interface Props {
   todos: Todo[];
@@ -12,9 +13,10 @@ interface Props {
   updateTask: (values: IUpdateTask) => void;
   deleteTask: (id: TaskId) => void;
   openAddModal: boolean;
+  openAlertDialog: IDeleteTaskAlert;
   handleOpenAddModal: () => void;
   handleCloseAddModal: () => void;
-  handleOpenAlertDialog: () => void;
+  handleOpenAlertDialog: (taskId: TaskId) => void;
   handleCloseAlertDialog: () => void;
 }
 
@@ -25,6 +27,7 @@ const Todos = ({
   updateTask,
   deleteTask,
   openAddModal,
+  openAlertDialog,
   handleOpenAddModal,
   handleCloseAddModal,
   handleOpenAlertDialog,
@@ -44,9 +47,7 @@ const Todos = ({
             <TodoCard
               data={todo}
               updateTask={updateTask}
-              deleteTask={deleteTask}
               handleOpenAlertDialog={handleOpenAlertDialog}
-              handleCloseAlertDialog={handleCloseAlertDialog}
             />
           </div>
         ))}
@@ -55,6 +56,11 @@ const Todos = ({
         open={openAddModal}
         handleClose={handleCloseAddModal}
         addTodo={addTodo}
+      />
+      <DeleteAlert
+        openAlertDialog={openAlertDialog}
+        deleteTask={deleteTask}
+        handleClose={handleCloseAlertDialog}
       />
     </>
   );

@@ -27,3 +27,8 @@ export interface IUpdateTask {
   id: TaskId;
   status: TTaskStatus;
 }
+
+export interface IDeleteTaskAlert {
+  taskId: TaskId;
+  open: boolean;
+}

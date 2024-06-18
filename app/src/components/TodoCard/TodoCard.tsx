@@ -12,20 +12,12 @@ import styles from "./TodoCard.module.scss";
 interface Props {
   data: Todo;
   updateTask: (values: IUpdateTask) => void;
-  deleteTask: (id: TaskId) => void;
-  handleOpenAlertDialog: () => void;
-  handleCloseAlertDialog: () => void;
+  handleOpenAlertDialog: (taskId: TaskId) => void;
 }
 
 const label = { inputProps: { "aria-label": "controlled" } };
 
-const TodoCard = ({
-  data,
-  updateTask,
-  deleteTask,
-  handleOpenAlertDialog,
-  handleCloseAlertDialog,
-}: Props) => {
+const TodoCard = ({ data, updateTask, handleOpenAlertDialog }: Props) => {
   return (
     <Card className={styles.root}>
       <CardActions>
@@ -40,7 +32,7 @@ const TodoCard = ({
         <IconButton>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => deleteTask(data.id)}>
+        <IconButton onClick={() => handleOpenAlertDialog(data.id)}>
           <DeleteIcon />
         </IconButton>
       </CardActions>

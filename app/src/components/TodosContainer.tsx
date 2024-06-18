@@ -8,11 +8,20 @@ import {
   sendTodo,
   updateTask,
 } from "services/apiRequests";
-import { IUpdateTask, TaskId, Todos as TodosType, addTodo } from "ts/types";
+import {
+  IDeleteTaskAlert,
+  IUpdateTask,
+  TaskId,
+  Todos as TodosType,
+  addTodo,
+} from "ts/types";
 
 const TodosContainer = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
-  const [openAlertDialog, setOpenAlertDialog] = useState(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState<IDeleteTaskAlert>({
+    taskId: "",
+    open: false,
+  });
   const queryClient = useQueryClient();
   const { data: todos, isLoading } = useQuery({
     queryKey: ["products"],
@@ -45,6 +54,8 @@ const TodosContainer = () => {
   const mutationDeleteTask = useMutation({
     mutationFn: deleteTask,
     onSuccess: (result) => {
+      console.log("success");
+      handleCloseAlertDialog();
       queryClient.setQueryData(["products"], (oldData: TodosType) => {
         const prevData = oldData.filter((oldTask) => oldTask.id !== result.id);
         return [...prevData];
@@ -73,12 +84,18 @@ const TodosContainer = () => {
     setOpenAddModal(false);
   };
 
-  const handleOpenAlertDialog = () => {
-    setOpenAlertDialog(true);
+  const handleOpenAlertDialog = (taskId: TaskId) => {
+    setOpenAlertDialog({
+      taskId,
+      open: true,
+    });
   };
 
   const handleCloseAlertDialog = () => {
-    setOpenAlertDialog(false);
+    setOpenAlertDialog({
+      taskId: "",
+      open: false,
+    });
   };
 
   return (
@@ -89,6 +106,7 @@ const TodosContainer = () => {
       updateTask={handleUpdateTask}
       deleteTask={handleDeleteTask}
       openAddModal={openAddModal}
+      openAlertDialog={openAlertDialog}
       handleOpenAddModal={handleOpenAddModal}
       handleCloseAddModal={handleCloseAddModal}
       handleOpenAlertDialog={handleOpenAlertDialog}
