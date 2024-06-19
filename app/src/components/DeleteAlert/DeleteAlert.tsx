@@ -3,7 +3,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { deleteTask } from "services/apiRequests";
 import { IDeleteTaskAlert, TaskId } from "ts/types";
 
 interface Props {
@@ -12,8 +11,7 @@ interface Props {
   handleClose: () => void;
 }
 
-const DeleteAlert = ({ openAlertDialog, handleClose }: Props) => {
-  console.log(openAlertDialog.open);
+const DeleteAlert = ({ openAlertDialog, deleteTask, handleClose }: Props) => {
   return (
     <Dialog open={openAlertDialog.open} onClose={handleClose}>
       <DialogContent>

@@ -27,7 +27,6 @@ app.get("/todos", async (_, res: Response) => {
 });
 
 app.post("/add", async (req: Request, res: Response) => {
-  console.log(req.body);
   const { title, description, status } = req.body;
   if (!title || !description || !status) {
     res
@@ -47,10 +46,10 @@ app.post("/add", async (req: Request, res: Response) => {
   try {
     const result = await db.query(
       `INSERT INTO tasks (id_task, title, description, status, created_at, updated_at)
-      VALUES ('${newTask.id_task}', '${newTask.title}', '${newTask.description}', '${newTask.status}', ${newTask.created_at}, ${newTask.updated_at});
-      `
+      VALUES ('${newTask.id_task}', '${newTask.title}', '${newTask.description}', '${newTask.status}', ${newTask.created_at}, ${newTask.updated_at})
+      RETURNING *;`
     );
-    res.status(200).send(newTask);
+    res.status(200).send(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

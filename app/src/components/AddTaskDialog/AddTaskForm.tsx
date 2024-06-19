@@ -14,7 +14,6 @@ interface Props {
 
 const AddTaskForm = ({ addTodo }: Props) => {
   const { control, handleSubmit } = useForm<addTodo>();
-  console.log(control);
 
   return (
     <form onSubmit={handleSubmit(addTodo)}>

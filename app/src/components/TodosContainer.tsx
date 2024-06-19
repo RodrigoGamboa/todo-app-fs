@@ -54,7 +54,6 @@ const TodosContainer = () => {
   const mutationDeleteTask = useMutation({
     mutationFn: deleteTask,
     onSuccess: (result) => {
-      console.log("success");
       handleCloseAlertDialog();
       queryClient.setQueryData(["products"], (oldData: TodosType) => {
         const prevData = oldData.filter((oldTask) => oldTask.id !== result.id);
