@@ -7,15 +7,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
-interface Props {
-  editTask: (values) => void;
-}
-
-const EditTaskForm = ({ editTask }: Props) => {
+const EditTaskForm = () => {
   const { control, handleSubmit } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(editTask)}>
+    <form
+    // onSubmit={handleSubmit(editTask)}
+    >
       <DialogTitle>Edit Task</DialogTitle>
       <DialogContent>
         <Controller
@@ -58,7 +56,7 @@ const EditTaskForm = ({ editTask }: Props) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button type="submit">Add Task</Button>
+        <Button type="submit">Save</Button>
       </DialogActions>
     </form>
   );

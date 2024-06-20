@@ -34,5 +34,8 @@ export interface IDeleteTaskAlert {
 
 export interface IEditTaskForm extends addTodo {
   taskId: TaskId;
+}
+
+export interface IEditTask extends IEditTaskForm {
   open: boolean;
 }

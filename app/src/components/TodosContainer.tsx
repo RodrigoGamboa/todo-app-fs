@@ -68,11 +68,6 @@ const TodosContainer = () => {
     mutation.mutate(values);
   };
 
-  const handleEditTask = (values) => {
-    console.log(values);
-    // mutation.mutate(values)
-  };
-
   const handleUpdateTask = (values: IUpdateTask) => {
     mutationUpdateTask.mutate(values);
   };
@@ -116,7 +111,6 @@ const TodosContainer = () => {
       todos={todos}
       isLoading={isLoading}
       addTodo={handleAddTodo}
-      editTask={handleEditTask}
       updateTask={handleUpdateTask}
       deleteTask={handleDeleteTask}
       openAddModal={openAddModal}

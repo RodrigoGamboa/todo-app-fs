@@ -4,13 +4,15 @@ import EditTaskForm from "./EditTaskForm";
 interface Props {
   open: boolean;
   handleClose: () => void;
-  editTask: (values) => void;
+  //   editTask: IEditTaskForm;
 }
 
-const EditTask = ({ open, handleClose, editTask }: Props) => {
+const EditTask = ({ open, handleClose }: Props) => {
   return (
     <Dialog open={open} onClose={handleClose}>
-      <EditTaskForm editTask={editTask} />
+      <EditTaskForm
+      //   editTask={editTask}
+      />
     </Dialog>
   );
 };

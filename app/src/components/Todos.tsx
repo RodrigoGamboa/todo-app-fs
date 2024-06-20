@@ -11,7 +11,6 @@ interface Props {
   todos: Todo[];
   isLoading?: boolean;
   addTodo: (values: addTodo) => void;
-  editTask: (values) => void;
   updateTask: (values: IUpdateTask) => void;
   deleteTask: (id: TaskId) => void;
   openAddModal: boolean;
@@ -29,7 +28,6 @@ const Todos = ({
   isLoading,
   todos,
   addTodo,
-  editTask,
   updateTask,
   deleteTask,
   openAddModal,
@@ -70,7 +68,7 @@ const Todos = ({
       <EditTask
         open={openEditTask}
         handleClose={handleCloseEditTask}
-        editTask={editTask}
+        // editTask={editTask}
       />
       <DeleteAlert
         openAlertDialog={openAlertDialog}
