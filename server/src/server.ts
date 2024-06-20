@@ -26,6 +26,20 @@ app.get("/todos", async (_, res: Response) => {
   }
 });
 
+app.get("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) {
+    res.status(400).send("Id not provided correctly.");
+  }
+  try {
+    const result = await db.query(`SELECT * FROM tasks WHERE id = ${id};`);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.post("/add", async (req: Request, res: Response) => {
   const { title, description, status } = req.body;
   console.log(status);
