@@ -28,6 +28,7 @@ app.get("/todos", async (_, res: Response) => {
 
 app.post("/add", async (req: Request, res: Response) => {
   const { title, description, status } = req.body;
+  console.log(status);
   if (!title || !description || !status) {
     res
       .status(400)

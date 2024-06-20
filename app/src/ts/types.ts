@@ -1,5 +1,4 @@
 import { TodoStatus } from "enums/tasks";
-// export type TodoStatus = "pending" | "in-progress" | "completed";
 export type TTaskStatus =
   | TodoStatus.COMPLETED
   | TodoStatus.IN_PROGRESS
@@ -29,6 +28,11 @@ export interface IUpdateTask {
 }
 
 export interface IDeleteTaskAlert {
+  taskId: TaskId;
+  open: boolean;
+}
+
+export interface IEditTaskForm extends addTodo {
   taskId: TaskId;
   open: boolean;
 }

@@ -6,19 +6,17 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { addTodo } from "ts/types";
-import { TodoStatus } from "enums/tasks";
 
 interface Props {
-  addTodo: (values: addTodo) => void;
+  editTask: (values) => void;
 }
 
-const AddTaskForm = ({ addTodo }: Props) => {
-  const { control, handleSubmit } = useForm<addTodo>();
+const EditTaskForm = ({ editTask }: Props) => {
+  const { control, handleSubmit } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(addTodo)}>
-      <DialogTitle>Add Task</DialogTitle>
+    <form onSubmit={handleSubmit(editTask)}>
+      <DialogTitle>Edit Task</DialogTitle>
       <DialogContent>
         <Controller
           render={({ field }) => (
@@ -35,12 +33,24 @@ const AddTaskForm = ({ addTodo }: Props) => {
           control={control}
         />
         <Controller
-          defaultValue={TodoStatus.PENDING}
+          //   defaultValue={TodoStatus.PENDING}
           render={({ field }) => (
             <Select required label="Status" {...field}>
-              <MenuItem value={TodoStatus.PENDING}>Pending</MenuItem>
-              <MenuItem value={TodoStatus.IN_PROGRESS}>In Progress</MenuItem>
-              <MenuItem value={TodoStatus.COMPLETED}>Completed</MenuItem>
+              <MenuItem
+              //   value={TodoStatus.PENDING}
+              >
+                Pending
+              </MenuItem>
+              <MenuItem
+              //   value={TodoStatus.IN_PROGRESS}
+              >
+                In Progress
+              </MenuItem>
+              <MenuItem
+              //   value={TodoStatus.COMPLETED}
+              >
+                Completed
+              </MenuItem>
             </Select>
           )}
           name="status"
@@ -54,4 +64,4 @@ const AddTaskForm = ({ addTodo }: Props) => {
   );
 };
 
-export default AddTaskForm;
+export default EditTaskForm;

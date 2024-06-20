@@ -18,6 +18,7 @@ import {
 
 const TodosContainer = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditTask, setOpenEditTask] = useState(false);
   const [openAlertDialog, setOpenAlertDialog] = useState<IDeleteTaskAlert>({
     taskId: "",
     open: false,
@@ -67,6 +68,11 @@ const TodosContainer = () => {
     mutation.mutate(values);
   };
 
+  const handleEditTask = (values) => {
+    console.log(values);
+    // mutation.mutate(values)
+  };
+
   const handleUpdateTask = (values: IUpdateTask) => {
     mutationUpdateTask.mutate(values);
   };
@@ -81,6 +87,14 @@ const TodosContainer = () => {
 
   const handleCloseAddModal = () => {
     setOpenAddModal(false);
+  };
+
+  const handleOpenEditTask = () => {
+    setOpenEditTask(true);
+  };
+
+  const handleCloseEditTask = () => {
+    setOpenEditTask(false);
   };
 
   const handleOpenAlertDialog = (taskId: TaskId) => {
@@ -102,12 +116,16 @@ const TodosContainer = () => {
       todos={todos}
       isLoading={isLoading}
       addTodo={handleAddTodo}
+      editTask={handleEditTask}
       updateTask={handleUpdateTask}
       deleteTask={handleDeleteTask}
       openAddModal={openAddModal}
+      openEditTask={openEditTask}
       openAlertDialog={openAlertDialog}
       handleOpenAddModal={handleOpenAddModal}
       handleCloseAddModal={handleCloseAddModal}
+      handleOpenEditTask={handleOpenEditTask}
+      handleCloseEditTask={handleCloseEditTask}
       handleOpenAlertDialog={handleOpenAlertDialog}
       handleCloseAlertDialog={handleCloseAlertDialog}
     />
