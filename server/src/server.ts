@@ -33,7 +33,7 @@ app.get("/todos/:id", async (req: Request, res: Response) => {
   }
   try {
     const result = await db.query(`SELECT * FROM tasks WHERE id = ${id};`);
-    res.json(result.rows);
+    res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

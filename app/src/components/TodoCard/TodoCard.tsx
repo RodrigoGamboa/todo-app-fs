@@ -12,7 +12,7 @@ import styles from "./TodoCard.module.scss";
 interface Props {
   data: Todo;
   updateTask: (values: IUpdateTask) => void;
-  handleOpenEditTask: () => void;
+  handleOpenEditTask: (taskId: TaskId) => void;
   handleOpenAlertDialog: (taskId: TaskId) => void;
 }
 
@@ -35,7 +35,7 @@ const TodoCard = ({
       </CardActions>
       <Typography>{data.title}</Typography>
       <CardActions>
-        <IconButton onClick={handleOpenEditTask}>
+        <IconButton onClick={() => handleOpenEditTask(data.id)}>
           <EditIcon />
         </IconButton>
         <IconButton onClick={() => handleOpenAlertDialog(data.id)}>

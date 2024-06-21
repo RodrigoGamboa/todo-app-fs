@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Todos from "components/Todos";
 import {
   deleteTask,
+  fetchTask,
   fetchTodos,
   sendTodo,
   updateTask,
@@ -17,6 +18,7 @@ import {
 } from "ts/types";
 
 const TodosContainer = () => {
+  const [productId, setProductId] = useState("");
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditTask, setOpenEditTask] = useState(false);
   const [openAlertDialog, setOpenAlertDialog] = useState<IDeleteTaskAlert>({
@@ -27,6 +29,11 @@ const TodosContainer = () => {
   const { data: todos, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: fetchTodos,
+  });
+
+  const { data: task } = useQuery({
+    queryKey: ["task", productId],
+    queryFn: () => fetchTask(productId),
   });
 
   const mutation = useMutation({
@@ -84,8 +91,9 @@ const TodosContainer = () => {
     setOpenAddModal(false);
   };
 
-  const handleOpenEditTask = () => {
+  const handleOpenEditTask = (taskId: TaskId) => {
     setOpenEditTask(true);
+    setProductId(taskId);
   };
 
   const handleCloseEditTask = () => {
@@ -106,9 +114,12 @@ const TodosContainer = () => {
     });
   };
 
+  console.log(task);
+
   return (
     <Todos
       todos={todos}
+      task={task}
       isLoading={isLoading}
       addTodo={handleAddTodo}
       updateTask={handleUpdateTask}

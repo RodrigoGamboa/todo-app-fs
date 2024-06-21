@@ -5,10 +5,18 @@ import DeleteAlert from "components/DeleteAlert/DeleteAlert";
 import EditTask from "components/EditTask/EditTask";
 import TodoCard from "components/TodoCard/TodoCard";
 import TodoCounter from "components/TodoCounter/TodoCounter";
-import { IDeleteTaskAlert, IUpdateTask, TaskId, Todo, addTodo } from "ts/types";
+import {
+  IDeleteTaskAlert,
+  IEditTaskForm,
+  IUpdateTask,
+  TaskId,
+  Todo,
+  addTodo,
+} from "ts/types";
 
 interface Props {
   todos: Todo[];
+  task: IEditTaskForm;
   isLoading?: boolean;
   addTodo: (values: addTodo) => void;
   updateTask: (values: IUpdateTask) => void;
@@ -18,7 +26,7 @@ interface Props {
   openAlertDialog: IDeleteTaskAlert;
   handleOpenAddModal: () => void;
   handleCloseAddModal: () => void;
-  handleOpenEditTask: () => void;
+  handleOpenEditTask: (taskId: TaskId) => void;
   handleCloseEditTask: () => void;
   handleOpenAlertDialog: (taskId: TaskId) => void;
   handleCloseAlertDialog: () => void;
@@ -27,6 +35,7 @@ interface Props {
 const Todos = ({
   isLoading,
   todos,
+  task,
   addTodo,
   updateTask,
   deleteTask,
@@ -68,7 +77,7 @@ const Todos = ({
       <EditTask
         open={openEditTask}
         handleClose={handleCloseEditTask}
-        // editTask={editTask}
+        task={task}
       />
       <DeleteAlert
         openAlertDialog={openAlertDialog}

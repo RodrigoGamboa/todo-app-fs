@@ -6,8 +6,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import { IEditTaskForm } from "ts/types";
 
-const EditTaskForm = () => {
+interface Props {
+  task: IEditTaskForm;
+}
+
+const EditTaskForm = ({ task }: Props) => {
   const { control, handleSubmit } = useForm();
 
   return (
@@ -17,6 +22,7 @@ const EditTaskForm = () => {
       <DialogTitle>Edit Task</DialogTitle>
       <DialogContent>
         <Controller
+          defaultValue={task?.title}
           render={({ field }) => (
             <TextField required label="Title" {...field} />
           )}
@@ -24,6 +30,7 @@ const EditTaskForm = () => {
           control={control}
         />
         <Controller
+          defaultValue={task?.description}
           render={({ field }) => (
             <TextField required label="Description" {...field} />
           )}
@@ -31,7 +38,7 @@ const EditTaskForm = () => {
           control={control}
         />
         <Controller
-          //   defaultValue={TodoStatus.PENDING}
+          defaultValue={task?.status}
           render={({ field }) => (
             <Select required label="Status" {...field}>
               <MenuItem
